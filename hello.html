@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Vue</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+    <h1>Hello Vue!</h1>
+
+    <p>{{message}}</p>
+    <p>{{messageWithExclamationPoints}}</p>
+
+    <button v-on:click="addExclamationPoints">Add Exclametion Points</button>
+    <button v-on:click="clearExlamationPoints">Clear</button>
+</div>
+
+<script>
+    //setup vue app
+    const{createApp, ref, computed} = Vue 
+
+    createApp({
+        setup() {
+
+            const message = ref('Hi')
+            const numberOfExclamationPoints = ref(0)
+
+            function addExclamationPoints() {
+                if (numberOfExclamationPoints.value < 10){
+                    numberOfExclamationPoints.value ++
+                } else {
+                    alert('No more exclamation points!')
+                }
+                
+            }
+
+            function clearExlamationPoints() {
+                numberOfExclamationPoints.value = 0
+
+            }
+
+            const messageWithExclamationPoints = computed( function(){
+                let computedMessage = message.value
+                for(let x = 0; x < numberOfExclamationPoints.value; x++) {
+                    computedMessage = computedMessage + '!'
+                }
+                //or example, if numberOfExclamationPoints.value is 3, the loop will run
+                //three times, and computedMessage will end up as 'Hi!!!'
+                return computedMessage
+            })
+
+            return {
+                message,
+                numberOfExclamationPoints,
+                messageWithExclamationPoints,
+                addExclamationPoints,
+                clearExlamationPoints
+            }
+        }
+    }).mount('#app')
+
+</script>
+
+</body>
+</html>
